@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
     std::vector<Date*> dateVector;
     std::priority_queue<Date*, std::vector<Date*>, std::greater<Date*>> datePriorityQueue;
 
-
+    
     measure_execution_time("Read dates from file",
         [&inputFile, &N, &K, &dateVector, &datePriorityQueue](){
             read_dates_from_file(&inputFile, &N, &K, &dateVector, &datePriorityQueue);

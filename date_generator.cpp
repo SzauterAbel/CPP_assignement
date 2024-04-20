@@ -24,19 +24,19 @@ void generate_dates(int N, int K, const string& output_file) {
         int i = 0;
         while (i < N + K) {
             try {
-                Date* date = dateGenerator(
+                Date date = dateGenerator(
                     Date{1970, 1, 1},
                     Date{2038, 1, 19}
                 );
-                if (date != nullptr) {
+                if (date.getYear() != 0) {
                     if (output_file != "-") {
-                        outfile << date->getYear() << " "
-                                << date->getMonth() << " "
-                                << date->getDay() << endl;
+                        outfile << date.getYear() << " "
+                                << date.getMonth() << " "
+                                << date.getDay() << endl;
                     } else {
-                        cout << date->getYear() << " "
-                                << date->getMonth() << " "
-                                << date->getDay() << endl;
+                        cout << date.getYear() << " "
+                                << date.getMonth() << " "
+                                << date.getDay() << endl;
                     }
                     ++i;
                 }
