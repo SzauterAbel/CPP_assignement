@@ -1,0 +1,4 @@
+Read dates from file task has started.
+Read dates from file task was finished. : 134 millisec.
+Choose, remove, replace task has started.
+Choose, remove, replace task was finished. : 93924 millisec.
