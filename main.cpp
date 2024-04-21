@@ -18,8 +18,8 @@ auto measure_execution_time(const std::string& task_name, Func&& task) {
     std::cerr << task_name << " task was finished in " << duration << " millisec." << std::endl;
 }
 
-auto read_dates_from_file = [](std::ifstream *inputFile, int* N, int* K, std::vector<Date*> *dateVector,
-    std::priority_queue<Date*, std::vector<Date*>, std::greater<Date*>> *datePriorityQueue){
+auto read_dates_from_file = [](std::ifstream *inputFile, int* N, int* K, std::vector<Date> *dateVector,
+    std::priority_queue<Date, std::vector<Date>, std::greater<Date>> *datePriorityQueue){
         (*inputFile) >> *N >> *K;
         if (*N < 0 || *K < 0) {
             std::cerr << "Error: N and K must be non-negative" << std::endl;
@@ -30,28 +30,27 @@ auto read_dates_from_file = [](std::ifstream *inputFile, int* N, int* K, std::ve
         for (int i = 0; i < *N; ++i) {
             short year, month, day;
             (*inputFile) >> year >> month >> day;
-            (*datePriorityQueue).push(new Date(year, month, day));
+            (*datePriorityQueue).push(Date(year, month, day));
         }
 
         for (int i = 0; i < *K; ++i) {
             short year, month, day;
             (*inputFile) >> year >> month >> day;
-            (*dateVector).push_back(new Date(year, month, day));
+            (*dateVector).push_back(Date(year, month, day));
         }
         (*inputFile).close();
     };
 
 
-auto choose_delete_replace = [](int N, int K, std::vector<Date*> *dateVector,
-    std::priority_queue<Date*, std::vector<Date*>, std::greater<Date*>> *datePriorityQueue) {
+auto choose_delete_replace = [](int N, int K, std::vector<Date> *dateVector,
+    std::priority_queue<Date, std::vector<Date>, std::greater<Date>> *datePriorityQueue) {
     for (int i = 0; i < N + K; ++i) {
-        Date* minDate = (*datePriorityQueue).top();
-        consumer(*minDate);
+        Date minDate = (*datePriorityQueue).top();
+        consumer(minDate);
         (*datePriorityQueue).pop();
-        delete minDate;
 
         if (!(*dateVector).empty()) {
-            Date* nextDate = (*dateVector).front();
+            Date nextDate = (*dateVector).front();
             (*dateVector).erase((*dateVector).begin());
             (*datePriorityQueue).push(nextDate);
         }
@@ -71,8 +70,8 @@ int main(int argc, char* argv[]) {
     }
     
     int N, K;
-    std::vector<Date*> dateVector;
-    std::priority_queue<Date*, std::vector<Date*>, std::greater<Date*>> datePriorityQueue;
+    std::vector<Date> dateVector;
+    std::priority_queue<Date, std::vector<Date>, std::greater<Date>> datePriorityQueue;
 
     
     measure_execution_time("Read dates from file",

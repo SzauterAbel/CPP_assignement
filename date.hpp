@@ -20,6 +20,7 @@ class Date {
         bool isDateValid() const noexcept;
         explicit operator bool() const noexcept;
         bool operator<(const Date& rhs) const noexcept;
+        bool operator>(const Date& rhs) const noexcept;
         bool operator==(const Date& rhs) const noexcept;
 };
 

@@ -53,6 +53,10 @@ bool Date::operator<(const Date &rhs) const noexcept {
     return false;
 }
 
+bool Date::operator>(const Date &rhs) const noexcept {
+    return rhs < *this;
+}
+
 bool Date::operator==(const Date &rhs) const noexcept {
     return !(*this < rhs || rhs < *this);
 }
