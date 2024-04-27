@@ -30,13 +30,13 @@ auto read_dates_from_file = [](std::ifstream *inputFile, int* N, int* K, std::ve
         for (int i = 0; i < *N; ++i) {
             short year, month, day;
             (*inputFile) >> year >> month >> day;
-            (*datePriorityQueue).push(Date(year, month, day));
+            datePriorityQueue->push(Date(year, month, day));
         }
 
         for (int i = 0; i < *K; ++i) {
             short year, month, day;
             (*inputFile) >> year >> month >> day;
-            (*dateVector).push_back(Date(year, month, day));
+            dateVector->push_back(Date(year, month, day));
         }
         (*inputFile).close();
     };
@@ -45,14 +45,12 @@ auto read_dates_from_file = [](std::ifstream *inputFile, int* N, int* K, std::ve
 auto choose_delete_replace = [](int N, int K, std::vector<Date> *dateVector,
     std::priority_queue<Date, std::vector<Date>, std::greater<Date>> *datePriorityQueue) {
     for (int i = 0; i < N + K; ++i) {
-        Date minDate = (*datePriorityQueue).top();
+        Date minDate = datePriorityQueue->top();
         consumer(minDate);
-        (*datePriorityQueue).pop();
+        datePriorityQueue->pop();
 
-        if (!(*dateVector).empty()) {
-            Date nextDate = (*dateVector).front();
-            (*dateVector).erase((*dateVector).begin());
-            (*datePriorityQueue).push(nextDate);
+        if (i < K) {
+            datePriorityQueue->push(dateVector->at(i));
         }
     }
 };
